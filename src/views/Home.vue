@@ -27,7 +27,7 @@
         </v-card-actions>
       </v-card>
 
-      <v-carousel :cycle="true">
+      <v-carousel :cycle="true" hide-delimiters>
         <v-carousel-item
         v-for="tour in tours"
         :key="tour.name"
@@ -36,7 +36,7 @@
             <v-img
               class="white--text"
               height="175px"
-              v-bind:src="tour.img"
+              v-bind:src="tour.mainImg"
             >
               <v-container fill-height fluid>
                 <v-layout fill-height justify-center>
@@ -47,15 +47,18 @@
               </v-container>
             </v-img>
             <v-card-title>
-              <div>
+              <div class="pl-4">
                 <span>{{tour.subtitle}}</span><br>
                 <span>{{tour.text}}</span><br>
               </div>
             </v-card-title>
-            <v-card-actions>
-              <v-btn flat color="Light Blue">mehr...</v-btn>
+            <v-card-actions class="pl-4">"
+              <v-btn
+              flat color="Light Blue"
+              v-on:click="loadDetails(tour)"
+              >mehr...</v-btn>
             </v-card-actions>
-          </v-card>
+            </v-card>
         </v-carousel-item>
       </v-carousel>
     </v-flex>
@@ -64,29 +67,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      tours: [
-        {
-          title: 'Travemünde',
-          subtitle: 'Travemünder Woche 2019',
-          text: '05.07.2019 - 18.08.2019 \n Es geht wieder die Travemünder Woche los und ich möchte euch mitnehmen!',
-          img: 'https://images.unsplash.com/photo-1526908234827-dcf46d772c3c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1331&q=80',
-        },
-        {
-          title: 'Kiel',
-          subtitle: 'Kieler Woche 2019',
-          text: '018.06.2019 - 3.07.2019 \n Es geht wieder die Kiel Woche los und ich möchte euch mitnehmen!',
-          img: 'https://images.unsplash.com/photo-1560754325-f7116aee22b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-        },
-        {
-          title: 'Karibik',
-          subtitle: 'karibiksegeln 2018',
-          text: '018.06.2018 - 3.07.2018 \n Es geht wieder in die Karibik und ich nehme gerne meinen Sohn umsonst mit!',
-          img: 'https://images.unsplash.com/photo-1542213448375-a03409f44bfb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-        },
-      ],
-    };
+  methods: {
+    loadDetails(tour) {
+      // eslint-disable-next-line
+      this.$router.push('/details/' + tour.title);
+    },
+  },
+  computed: {
+    tours() {
+      return this.$store.getters.alltours;
+    },
   },
 };
 </script>
