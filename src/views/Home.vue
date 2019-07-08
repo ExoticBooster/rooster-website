@@ -1,7 +1,7 @@
 <template>
   <v-layout justify-center>
     <v-flex xs10 sm6 offset-sm3>
-      <v-card class="mt-4">
+      <v-card class='mt-4 elevation-1'>
         <v-img
           class="white--text"
           height="175px"
@@ -27,7 +27,7 @@
         </v-card-actions>
       </v-card>
 
-      <v-carousel :cycle="true" hide-delimiters>
+      <v-carousel class="elevation-0" hide-controls="true" hide-delimiters="">
         <v-carousel-item
         v-for="tour in tours"
         :key="tour.name"

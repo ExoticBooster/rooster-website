@@ -2,12 +2,12 @@
 <v-app>
   <v-toolbar
       app
-      color="teal lighten-3"
+      color="blue darken-3"
       dark
       scroll-off-screen
       scroll-target="#scrolling-techniques">
-    <v-avatar>
-      <img src="@/assets/RoosterLogo.png" alt="">
+    <v-avatar @click=home>
+      <img src="@/assets/RoosterLogo.png">
     </v-avatar>
     <v-toolbar-title>Rooster on the Sea</v-toolbar-title>
     <v-spacer></v-spacer>
@@ -20,5 +20,14 @@
 </v-app>
 </template>
 
+<script>
+export default {
+  methods: {
+    home() {
+      this.$router.push('/');
+    },
+  },
+};
+</script>
 <style>
 </style>
