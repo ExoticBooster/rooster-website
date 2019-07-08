@@ -11,6 +11,7 @@
         ></v-img>
         <v-card-title class="justify-center">
         <h4>{{tour.subtitle}}</h4>
+        <h5>{{tour.startDate}} - {{tour.endDate}}</h5>
         </v-card-title>
         <v-card-text> {{ tour.text}}</v-card-text>
       </v-card>
