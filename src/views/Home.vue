@@ -1,6 +1,8 @@
 <template>
   <v-layout justify-center>
     <v-flex xs10 sm6 offset-sm3>
+
+      <!-- About Me Start -->
       <v-card class='mt-4 elevation-1'>
         <v-img
           class="white--text"
@@ -23,10 +25,12 @@
           </div>
         </v-card-title>
          <v-card-actions>
-          <v-btn flat color="Light Blue">mehr...</v-btn>
+          <v-btn flat color="">mehr</v-btn>
         </v-card-actions>
       </v-card>
-
+      <!-- About Me end -->
+      
+      <!-- Tour Carousel Begin -->
       <v-carousel class="elevation-0" hide-controls="true" hide-delimiters="">
         <v-carousel-item
         v-for="tour in tours"
@@ -49,18 +53,19 @@
             <v-card-title>
               <div class="pl-4">
                 <span>{{tour.subtitle}}</span><br>
-                <span>{{tour.text}}</span><br>
+                <span>{{tour.text | truncate(80, '...')}}</span><br>
               </div>
             </v-card-title>
-            <v-card-actions class="pl-4">"
+            <v-card-actions>
               <v-btn
               flat color="Light Blue"
-              v-on:click="loadDetails(tour)"
-              >mehr...</v-btn>
+              v-on:click=loadDetails(tour)
+              >mehr</v-btn>
             </v-card-actions>
             </v-card>
         </v-carousel-item>
       </v-carousel>
+      <!-- Tour Carousel End -->
     </v-flex>
   </v-layout>
 </template>
@@ -71,6 +76,15 @@ export default {
     loadDetails(tour) {
       // eslint-disable-next-line
       this.$router.push('/details/' + tour.title);
+    },
+  },
+  filters: {
+    truncate(text, length, suffix) {
+      if (text.length > length) {
+                return text.substring(0, length) + suffix;
+            } else {
+                return text;
+            }
     },
   },
   computed: {
