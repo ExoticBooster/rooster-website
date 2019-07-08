@@ -1,6 +1,6 @@
 <template>
   <v-layout justify-center>
-    <v-flex xs10 sm6 offset-sm3>
+    <v-flex xs10 sm6>
 
       <!-- About Me Start -->
       <v-card class='mt-4 elevation-1'>
@@ -29,9 +29,8 @@
         </v-card-actions>
       </v-card>
       <!-- About Me end -->
-      
       <!-- Tour Carousel Begin -->
-      <v-carousel class="elevation-0" hide-controls="true" hide-delimiters="">
+      <v-carousel class="elevation-0" hide-controls hide-delimiters>
         <v-carousel-item
         v-for="tour in tours"
         :key="tour.name"
@@ -81,10 +80,9 @@ export default {
   filters: {
     truncate(text, length, suffix) {
       if (text.length > length) {
-                return text.substring(0, length) + suffix;
-            } else {
-                return text;
-            }
+        return text.substring(0, length) + suffix;
+      }
+      return text;
     },
   },
   computed: {

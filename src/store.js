@@ -9,7 +9,7 @@ export default new Vuex.Store({
       {
         title: 'Travemünde',
         subtitle: 'Travemünder Woche 2019',
-        text: 'Es geht wieder die Travemünder Woche los und ich möchte euch mitnehmen!', 
+        text: 'Es geht wieder die Travemünder Woche los und ich möchte euch mitnehmen!',
         mainImg: 'https://images.unsplash.com/photo-1526908234827-dcf46d772c3c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1331&q=80',
         img: [],
         startDate: '05.07.2019',
@@ -25,7 +25,7 @@ export default new Vuex.Store({
 
           ],
         startDate: '18.06.2019',
-        endDate: '3.07.2019',
+        endDate: '03.07.2019',
       },
       {
         title: 'Karibik',
@@ -39,10 +39,12 @@ export default new Vuex.Store({
           'https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80',
           'https://images.unsplash.com/photo-1541526855570-9154d61f6a8b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
           'https://images.unsplash.com/photo-1446052822510-19cf420ca93b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80',
-          'https://images.unsplash.com/photo-1470081766425-a75c92adff0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'
+          'https://images.unsplash.com/photo-1470081766425-a75c92adff0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80',
         ],
         startDate: '05.07.2019',
-        endDate: '18.08.2019',
+        endDate: '19.07.2019',
+        /* Für später:
+          */
       },
     ],
   },

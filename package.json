@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "register-service-worker": "^1.6.2",
+    "v-calendar": "^1.0.0-beta.14",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
+    "vue-sweet-calendar": "^0.3.1",
     "vuetify": "^1.5.16",
     "vuex": "^3.0.1"
   },
