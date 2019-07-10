@@ -13,9 +13,8 @@ const app = firebase.initializeApp({
 
 const db = app.database();
 const auth = firebase.auth();
-
 // data
-const toursCollection = db.collection('categories');
+const toursCollection = db.ref('categories');
 
 export {
   db,

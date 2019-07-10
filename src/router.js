@@ -32,5 +32,10 @@ export default new Router({
       },
       component: loadView('Admin'),
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: loadView('Login'),
+    },
   ],
 });
