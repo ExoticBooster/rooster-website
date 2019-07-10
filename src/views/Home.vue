@@ -52,6 +52,7 @@
             <v-card-title>
               <div class="pl-4">
                 <span>{{tour.subtitle}}</span><br>
+                <span><h5>{{tour.startDate}} - {{tour.endDate}}</h5></span>
                 <span>{{tour.text | truncate(80, '...')}}</span><br>
               </div>
             </v-card-title>
