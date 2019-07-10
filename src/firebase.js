@@ -1,6 +1,7 @@
-import { initializeApp } from 'firebase';
+import firebase from 'firebase';
+import 'firebase/firestore';
 
-const app = initializeApp({
+const app = firebase.initializeApp({
   apiKey: 'AIzaSyBx6L2JeXbt51Unc-djenk-iAyRUKprZtc',
   authDomain: 'rooster-4faf7.firebaseapp.com',
   databaseURL: 'https://rooster-4faf7.firebaseio.com',
@@ -10,5 +11,14 @@ const app = initializeApp({
   appId: '1:985634018262:web:097748c628a4c107',
 });
 
-export const db = app.database();
-export const tours = db.ref('categories');
+const db = app.database();
+const auth = firebase.auth();
+
+// data
+const toursCollection = db.collection('categories');
+
+export {
+  db,
+  auth,
+  toursCollection,
+};
