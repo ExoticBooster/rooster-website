@@ -25,7 +25,10 @@
             #TODO:
             - Dont load the pictures in full resulution just for Thumbnails!
          -->
-        <v-layout class="justify-center mb-2 mt-4">
+        <v-card-title v-if="tour.img.length > 0" class="justify-start mb-0 ml-4">
+          Impressionen:
+        </v-card-title>
+        <v-layout class="justify-center mb-2 mt-0">
           <v-avatar
           v-for="index in 4"
           :key="index"
@@ -42,73 +45,26 @@
           </v-btn>
         </v-card-actions>
         <!-- Card Callendar -->
-        <Calendar>
-        </Calendar>
+        <v-card-actions class="justify-center">
+          <vc-calendar title-position="left" :attributes='attrs'>
+          </vc-calendar>
+        </v-card-actions>
       </v-card>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import { setupCalendar, Calendar } from 'v-calendar';
-
-setupCalendar({
-  componentPrefix: 'vc',
-});
-
 export default {
-  components: {
-    Calendar,
-  },
   data() {
     return {
-      eventCategories: [
-        {
-          id: 1,
-          title: 'Verfügbar',
-          textColor: 'white',
-          backgroundColor: 'green',
-        },
-        {
-          id: 2,
-          title: 'Ausgebucht',
-          textColor: 'white',
-          backgroundColor: 'red',
-        },
-      ],
-      events: [
-        {
-          title: 'Mittags',
-          start: '2019-07-06',
-          startTime: '12:00',
-          end: '2019-07-07',
-          endTime: '14:00',
-          categoryId: 1,
-        },
-        {
-          title: 'Abendregatta',
-          start: '2019-07-08',
-          startTime: '16:00',
-          end: '2019-07-08',
-          endTime: '20:00',
-          categoryId: 1,
-        },
-        {
-          title: 'Abendregatta',
-          start: '2019-07-09',
-          startTime: '16:00',
-          end: '2019-07-09',
-          endTime: '20:00',
-          categoryId: 1,
-        },
-      ],
       title: this.$route.params.title,
     };
   },
   methods: {
     convertDate(date) {
       const parts = date.split('.');
-      const newDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+      const newDate = `${parts[1]}-${parts[0]}-${parts[2]}`;
       return newDate;
     },
   },
@@ -117,8 +73,27 @@ export default {
       const result = this.$store.getters.tourByName(this.title);
       return result[0];
     },
-  },
+    
+    attrs(){
+      let liste = []
+      for( var item in this.tour.angebote){
+        var current = this.tour.angebote[item]
+        liste.push(
+          {
+            highlight: current.gebucht ? 'red' : 'blue' ,
+            dates: new Date(this.convertDate(current.startDate)),
+            popover:{
+              label:current.title,
+              visibility: 'click'
+            }
+          }
+        )
+      }
+      return liste;
+    }
+  }
 };
+
 </script>
 
 <style scoped>
