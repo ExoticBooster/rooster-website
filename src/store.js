@@ -1,10 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+const fb = require('./firebase.js');
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    user: null,
+    loginErrorMessage: null,
     tours: [
       {
         title: 'Travemünder Woche',
@@ -283,11 +287,31 @@ export default new Vuex.Store({
       // eslint-disable-next-line
       return state.tours.filter(tour => tour.title.match(title));
     },
+    getUser(state) {
+      return state.user;
+    },
+    getLoginErrorMessage(state) {
+      return state.loginErrorMessage;
+    },
   },
   mutations: {
-
+    setUser(state, user) {
+      state.user = user;
+    },
+    setLoginErrorMessage(state, msg) {
+      state.loginErrorMessage = msg;
+    },
   },
   actions: {
-
+    login(state, payload) {
+      fb.auth.signInWithEmailAndPassword(payload.email, payload.password)
+        .then((user) => {
+          state.commit('setLoginErrorMessage', null);
+          state.commit('setUser', user);
+        })
+        .catch((error) => {
+          state.commit('setLoginErrorMessage', error.message);
+        });
+    },
   },
 });
