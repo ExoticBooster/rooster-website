@@ -24,5 +24,17 @@ export default new Router({
       name: 'details',
       component: loadView('Details'),
     },
+    {
+      path: '/admin',
+      name: 'admin',
+      meta: {
+        requiresAuth: true,
+      },
+      component: loadView('Admin'),
+    },
+    {
+      path: '/login'
+      
+    }
   ],
 });
