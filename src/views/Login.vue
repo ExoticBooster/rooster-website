@@ -49,23 +49,25 @@
 </template>
 
 <script>
+import auth from '../firebase.js'
 
 export default {
   data(){
     return {
       email: '',
       password: '',
-      errorMessage: 'Falsches Passwort!',
+      errorMessage: '',
     }
   },
   methods:{
     signIn(){
-      firebase.auth().signInWithEmailAndPassword(email, password)
+      this.errorMessage = '';
+      let x = auth.signInWithEmailAndPassword(this.email, this.password)
       .then(function(){
         this.$router.push('/admin')
       })
-      .catch(function (error){
-        errorMessage = error.message;
+      .catch( (error) => {
+        this.errorMessage = error.message;
       })
     }
   }
