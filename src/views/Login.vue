@@ -9,7 +9,7 @@
 
         <v-layout justify-center>  
           <v-flex xs10>
-            <v-alert :value="errorMessage" color='error' outline xs>
+            <v-alert :value=errorTrigger color='error' outline xs>
               {{errorMessage}}
             </v-alert>
           </v-flex>
@@ -40,7 +40,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" @click="signIn">Login</v-btn>
+          <v-btn color="primary" v-on:click="onLogin">Login</v-btn>
         </v-card-actions>
       </v-card>
 
@@ -49,27 +49,30 @@
 </template>
 
 <script>
-import auth from '../firebase.js'
 
 export default {
   data(){
     return {
       email: '',
       password: '',
-      errorMessage: '',
     }
   },
   methods:{
-    signIn(){
-      this.errorMessage = '';
-      let x = auth.signInWithEmailAndPassword(this.email, this.password)
-      .then(function(){
-        this.$router.push('/admin')
-      })
-      .catch( (error) => {
-        this.errorMessage = error.message;
-      })
+    onLogin() {
+      this.$store.dispatch('login', {email: this.email, password: this.password});
     }
-  }
+  },
+
+  computed: {
+    errorMessage(){
+      return this.$store.getters.getLoginErrorMessage;
+    },
+    errorTrigger(){
+      if(this.errorMessage!= null){
+        return true;
+      }
+      else return false;
+    }
+  },
 }
 </script>
