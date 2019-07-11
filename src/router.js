@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from './store';
 
 Vue.use(Router);
 
@@ -20,7 +21,7 @@ export default new Router({
       component: loadView('Home'),
     },
     {
-      path: '/details/:title',
+      path: '/details/:id',
       name: 'details',
       component: loadView('Details'),
     },
@@ -31,6 +32,13 @@ export default new Router({
         requiresAuth: true,
       },
       component: loadView('Admin'),
+      beforeEnter(to, from, next) {
+        if (store.getters.getUser == null) {
+          next('/login');
+        } else {
+          next();
+        }
+      },
     },
     {
       path: '/login',
