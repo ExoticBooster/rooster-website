@@ -30,10 +30,10 @@
       </v-card>
       <!-- About Me end -->
       <!-- Tour Carousel Begin -->
-      <v-carousel class="elevation-0" hide-controls hide-delimiters>
+      <v-carousel class="elevation-0" hide-delimiters>
         <v-carousel-item
         v-for="tour in tours"
-        :key="tour.name"
+        :key="tour.docID"
         >
           <v-card class="mt-4">
             <v-img
@@ -53,13 +53,13 @@
               <div class="pl-4">
                 <span>{{tour.subtitle}}</span><br>
                 <span><h5>{{tour.startDate}} - {{tour.endDate}}</h5></span>
-                <span>{{tour.text | truncate(80, '...')}}</span><br>
+                <span>{{tour.description | truncate(80, '...')}}</span><br>
               </div>
             </v-card-title>
             <v-card-actions>
               <v-btn
               flat color="Light Blue"
-              v-on:click=loadDetails(tour)
+              v-on:click=loadDetails(tour.docID)
               >mehr</v-btn>
             </v-card-actions>
             </v-card>
@@ -73,23 +73,26 @@
 <script>
 export default {
   methods: {
-    loadDetails(tour) {
+    loadDetails(id) {
       // eslint-disable-next-line
-      this.$router.push('/details/' + tour.title);
+      this.$router.push('/details/' + id);
     },
   },
   filters: {
-    truncate(text, length, suffix) {
-      if (text.length > length) {
-        return text.substring(0, length) + suffix;
+    truncate(description, length, suffix) {
+      if (description.length > length) {
+        return description.substring(0, length) + suffix;
       }
-      return text;
+      return description;
     },
   },
   computed: {
     tours() {
       return this.$store.getters.alltours;
     },
+  },
+  beforeMount() {
+    this.$store.dispatch('loadCategories');
   },
 };
 </script>

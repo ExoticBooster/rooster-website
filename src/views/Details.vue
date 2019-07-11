@@ -20,12 +20,12 @@
         <h5>{{tour.startDate}} - {{tour.endDate}}</h5>
         <!-- Card Text -->
         </v-card-title>
-        <v-card-text> {{ tour.text}}</v-card-text>
+        <v-card-text> {{ tour.description}}</v-card-text>
         <!-- Card Thumbnails for Gallery
             #TODO:
             - Dont load the pictures in full resulution just for Thumbnails!
          -->
-        <v-card-title v-if="tour.img.length > 0" class="justify-start mb-0 ml-4">
+        <v-card-title v-if="img.length > 0" class="justify-start mb-0 ml-4">
           Impressionen:
         </v-card-title>
         <v-layout class="justify-center mb-2 mt-0">
@@ -35,11 +35,11 @@
           class="ml-3"
           >
             <v-img
-            v-bind:src="tour.img[index]"></v-img>
+            v-bind:src="img[index]"></v-img>
           </v-avatar>
         </v-layout>
         <!-- Gallery Button -->
-        <v-card-actions v-if="tour.img.length > 0" class="justify-center mb-5">
+        <v-card-actions v-if=" img != null && img.length > 0" class="justify-center mb-5">
           <v-btn>
             Zur Galerie
           </v-btn>
@@ -49,6 +49,7 @@
           <vc-calendar title-position="left" :attributes='attrs'>
           </vc-calendar>
         </v-card-actions>
+        <router-link :to="{ name: 'details', params: { id: 'LdWVTN8bvjdzTIXP67Cf' }}">trave</router-link>
       </v-card>
     </v-flex>
   </v-layout>
@@ -58,8 +59,37 @@
 export default {
   data() {
     return {
-      title: this.$route.params.title,
     };
+  },
+  computed: {
+    id() {
+      return this.$route.params.id;
+    },
+
+    tour() {
+      return this.$store.getters.tourByID(this.id);
+    },
+
+    img() {
+      return this.$store.getters.getImg;
+    },
+
+    attrs() {
+      return this.tour.angebote.map(i => ({
+          highlight: current.gebucht ? 'red' : 'blue',
+          dates: new Date(this.convertDate(current.startDate)),
+          popover: {
+            label: current.title,
+            visibility: 'click',
+          },
+        })
+      );
+    },
+  },
+  watch: {
+    id() {
+      this.loadContent();
+    },
   },
   methods: {
     convertDate(date) {
@@ -67,31 +97,13 @@ export default {
       const newDate = `${parts[1]}-${parts[0]}-${parts[2]}`;
       return newDate;
     },
-  },
-  computed: {
-    tour() {
-      const result = this.$store.getters.tourByName(this.title);
-      return result[0];
+    loadContent() {
+      this.$store.dispatch('loadCategory', this.id);
     },
-    
-    attrs(){
-      let liste = []
-      for( var item in this.tour.angebote){
-        var current = this.tour.angebote[item]
-        liste.push(
-          {
-            highlight: current.gebucht ? 'red' : 'blue' ,
-            dates: new Date(this.convertDate(current.startDate)),
-            popover:{
-              label:current.title,
-              visibility: 'click'
-            }
-          }
-        )
-      }
-      return liste;
-    }
-  }
+  },
+  beforeMount() {
+    this.loadContent();
+  },
 };
 
 </script>
