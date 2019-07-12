@@ -21,9 +21,9 @@ export default new Router({
       component: loadView('Home'),
     },
     {
-      path: '/details/:id',
-      name: 'details',
-      component: loadView('Details'),
+      path: '/tour/:id',
+      name: 'tour',
+      component: loadView('TourDetails'),
     },
     {
       path: '/admin',

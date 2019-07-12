@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
+// import createPersistedState from 'vuex-persistedstate';
 
 const fb = require('./firebase.js');
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  plugins: [createPersistedState()],
+  // plugins: [createPersistedState()],
 
   state: {
     user: null,
@@ -16,20 +16,8 @@ export default new Vuex.Store({
   },
 
   getters: {
-    alltours(state) {
-      return state.tours;
-    },
-    tourByID(state) {
-      return id => state.tours[id];
-    },
-    getUser(state) {
-      return state.user;
-    },
-    getLoginErrorMessage(state) {
-      return state.loginErrorMessage;
-    },
-    getImg(state) {
-      return state.img;
+    toursSize(state) {
+      return Object.keys(state.tours).length;
     },
   },
 
@@ -41,28 +29,26 @@ export default new Vuex.Store({
       state.loginErrorMessage = msg;
     },
     addTour(state, { id, tour }) {
-      state.tours[id] = tour;
-    },
-    setImg(state, payload) {
-      state.img = payload;
+      Vue.set(state.tours, id, tour);
     },
   },
 
   actions: {
-    async loadCategories(state) {
+    async loadTours(state) {
       let snapshot;
       try {
-        snapshot = await fb.db.collection('categtories').get();
+        // TODO: add where to only get future tours
+        snapshot = await fb.db.collection('tours').get();
       } catch (e) {
         console.log(e);
         return;
       }
 
-      snapshot.forEach((doc) => {
+      snapshot.docs.forEach((doc) => {
         const tour = doc.data();
-        tour.docID = doc.id;
+        tour.id = doc.id;
         state.commit('addTour', {
-          id: doc.id,
+          id: tour.id,
           tour,
         });
       });
@@ -71,32 +57,36 @@ export default new Vuex.Store({
     async login(state, payload) {
       let user;
 
+      state.commit('setLoginErrorMessage', null);
+
       try {
         user = await fb.auth.signInWithEmailAndPassword(payload.email, payload.password);
       } catch (error) {
         state.commit('setLoginErrorMessage', error.message);
-        return;
       }
 
-      state.commit('setLoginErrorMessage', null);
       state.commit('setUser', user);
     },
 
-    async loadCategory({ commit }, tourId) {
-      // TODO: only load if not already?
+    async loadTour({ commit, state }, id) {
+      if (state.tours[id]) {
+        console.log('Tour already loaded');
+        return;
+      }
 
-      let snapshot;
+      let doc;
       try {
-        snapshot = await fb.db.collection(`categories/${tourId}`).get();
+        doc = await fb.db.collection('tours').doc(id).get();
       } catch (e) {
         console.error(e);
       }
 
-      const data = snapshot.docs().shift();
-      console.log(data);
-      if (data) {
-        commit('addTour', data);
+      if (!doc.exists) {
+        console.log('Tour not found');
+        return;
       }
+
+      commit('addTour', { id, tour: doc.data() });
     },
   },
 });
