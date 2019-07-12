@@ -9,13 +9,14 @@
 
         <v-layout justify-center>
           <v-flex xs10>
-            <v-alert :value=errorTrigger color='error' outline xs>
-              {{errorMessage}}
+            <v-alert :value="!!errorMessage" color='error' outline xs>
+              {{ errorMessage }}
             </v-alert>
           </v-flex>
         </v-layout>
 
-        <v-card-text>
+        <v-progress-circular v-if="authPending" :width="5" color="primary" indeterminate />
+        <v-card-text v-else>
           <v-form>
             <v-text-field
               prepend-icon="person"
@@ -37,7 +38,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn color="primary" @click="onLogin">Login</v-btn>
+          <v-btn color="primary" @click="login">Login</v-btn>
         </v-card-actions>
       </v-card>
 
@@ -46,6 +47,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 export default {
   data() {
@@ -55,17 +57,25 @@ export default {
     };
   },
   methods: {
-    onLogin() {
-      this.$store.dispatch('login', { email: this.email, password: this.password });
+    async login() {
+      await this.$store.dispatch('login', { email: this.email, password: this.password });
     },
   },
-
   computed: {
     errorMessage() {
       return this.$store.getters.getLoginErrorMessage;
     },
-    errorTrigger() {
-      return !!this.errorMessage;
+    ...mapState([
+      'authPending',
+      'user',
+    ]),
+  },
+  watch: {
+    user(user) {
+      // Send authenticated users to the protected area
+      if (user) {
+        this.$router.push({ name: 'admin' });
+      }
     },
   },
 };

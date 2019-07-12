@@ -2,15 +2,16 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 // import createPersistedState from 'vuex-persistedstate';
 
-const fb = require('./firebase.js');
+import { auth, db } from './firebase';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   // plugins: [createPersistedState()],
 
   state: {
     user: null,
+    authPending: false,
     loginErrorMessage: null,
     tours: {},
   },
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     addTour(state, { id, tour }) {
       Vue.set(state.tours, id, tour);
     },
+    setAuthPending(state, pending) {
+      state.authPending = pending;
+    },
   },
 
   actions: {
@@ -38,7 +42,7 @@ export default new Vuex.Store({
       let snapshot;
       try {
         // TODO: add where to only get future tours
-        snapshot = await fb.db.collection('tours').get();
+        snapshot = await db.collection('tours').get();
       } catch (e) {
         console.log(e);
         return;
@@ -54,18 +58,29 @@ export default new Vuex.Store({
       });
     },
 
-    async login(state, payload) {
+    async login(state, { email, password }) {
       let user;
 
+      state.commit('setAuthPending', true);
       state.commit('setLoginErrorMessage', null);
 
       try {
-        user = await fb.auth.signInWithEmailAndPassword(payload.email, payload.password);
+        user = await auth.signInWithEmailAndPassword(email, password);
       } catch (error) {
         state.commit('setLoginErrorMessage', error.message);
       }
 
-      state.commit('setUser', user);
+      // state.commit('setUser', user);
+      state.commit('setAuthPending', false);
+      return user;
+    },
+
+    async logout() {
+      try {
+        await auth.signOut();
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     async loadTour({ commit, state }, id) {
@@ -76,7 +91,7 @@ export default new Vuex.Store({
 
       let doc;
       try {
-        doc = await fb.db.collection('tours').doc(id).get();
+        doc = await db.collection('tours').doc(id).get();
       } catch (e) {
         console.error(e);
       }
@@ -90,3 +105,11 @@ export default new Vuex.Store({
     },
   },
 });
+
+auth.onAuthStateChanged((user) => {
+  // update user in store on firbase auth state changes
+  store.commit('setUser', user);
+});
+
+
+export default store;

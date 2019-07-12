@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import store from './store';
+
+import { auth } from './firebase';
 
 Vue.use(Router);
 
@@ -11,7 +12,7 @@ function loadView(...view) {
   return () => import(/* webpackChunkName: "view-[request]" */ `@/views/${view.join('/')}.vue`);
 }
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -28,16 +29,9 @@ export default new Router({
     {
       path: '/admin',
       name: 'admin',
+      component: loadView('Admin'),
       meta: {
         requiresAuth: true,
-      },
-      component: loadView('Admin'),
-      beforeEnter(to, from, next) {
-        if (store.getters.getUser == null) {
-          next('/login');
-        } else {
-          next();
-        }
       },
     },
     {
@@ -47,3 +41,16 @@ export default new Router({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  const { currentUser } = auth;
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (requiresAuth && !currentUser) {
+    next('login');
+  } else {
+    next();
+  }
+});
+
+export default router;
