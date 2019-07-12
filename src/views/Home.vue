@@ -29,7 +29,7 @@
       <!-- About Me end -->
 
       <!-- Tour Carousel Begin -->
-      <v-carousel v-if="toursSize > 0" class="elevation-0" hide-delimiters>
+      <v-carousel v-if="toursSize > 0" class="elevation-0" hide-delimiters :cycle="false">
         <v-carousel-item v-for="tour in tours" :key="tour.docID">
           <v-card class="mt-4">
             <v-img class="white--text" height="175px" :src="tour.cover">
@@ -43,8 +43,8 @@
             </v-img>
             <v-card-title>
               <div class="pl-4">
-                <span>{{ tour.subtitle || ''}}</span><br>
-                <h5>{{ tour.startDate || '' }} - {{ tour.endDate || '' }}</h5>
+                <span v-if="tour.subtitle">{{ tour.subtitle || ''}}</span><br>
+                <h5 v-if="tour.startDate && tour.endDate">{{ tour.startDate }} - {{ tour.endDate }}</h5>
                 <span>{{ tour.description | truncate(80, '...') }}</span><br>
               </div>
             </v-card-title>
