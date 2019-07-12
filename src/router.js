@@ -24,20 +24,46 @@ const router = new Router({
     {
       path: '/tour/:id',
       name: 'tour',
-      component: loadView('TourDetails'),
+      component: loadView('tour/TourDetails'),
     },
     {
-      path: '/admin',
-      name: 'admin',
-      component: loadView('Admin'),
-      meta: {
-        requiresAuth: true,
-      },
+      path: '/tour/:id/book',
+      name: 'tourBooking',
+      component: loadView('tour/TourBooking'),
+    },
+    {
+      path: '/tour/:id/gallery',
+      name: 'tourGallery',
+      component: loadView('tour/TourGallery'),
     },
     {
       path: '/login',
       name: 'login',
       component: loadView('Login'),
+    },
+    {
+      path: '/admin',
+      component: loadView('admin/AdminWrapper'),
+      meta: {
+        requiresAuth: true,
+      },
+      children: [
+        {
+          path: '',
+          name: 'admin',
+          component: loadView('admin/AdminHome'),
+        },
+      ]
+    },
+    {
+      path: '/imprint',
+      name: 'imprint',
+      component: loadView('Imprint'),
+    },
+    {
+      path: '/dataprotection',
+      name: 'dataprotection',
+      component: loadView('Dataprotection'),
     },
   ],
 });
