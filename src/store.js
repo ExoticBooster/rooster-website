@@ -108,7 +108,7 @@ const store = new Vuex.Store({
 
 auth.onAuthStateChanged((user) => {
   // update user in store on firbase auth state changes
-  store.commit('setUser', user);
+  store.commit('setUser', user || null);
 });
 
 
