@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar app color="blue darken-3" dark scroll-off-screen scroll-target="#scrolling-techniques">
+    <v-toolbar app color="grey lighten-2" scroll-off-screen scroll-target="#scrolling-techniques">
       <router-link :to="{ name: 'home' }">
         <v-avatar>
           <img src="@/assets/RoosterLogo.png">
