@@ -22,15 +22,16 @@
     style="display:flex;flex-direction:column;"
     v-model="drawer"
     temporary
+    right
     app
     >
       <v-list class="pt-0"  three-line>
-          <v-list-tile>
-            <v-list-tile-title class="headline"> Home </v-list-tile-title>
-          </v-list-tile>
-          <v-list-tile>
-            <v-list-tile-title class="headline"> About Me </v-list-tile-title>
-          </v-list-tile>
+          <div v-for="item in navItems" :key="item.id">
+            <v-list-tile>
+              <v-list-tile-title class="headline"> {{item}} </v-list-tile-title>
+            </v-list-tile>
+              <v-divider></v-divider>
+          </div>
       </v-list>
           <v-spacer></v-spacer>
       <v-list>
@@ -48,6 +49,10 @@ export default {
   data() {
     return {
       drawer: false,
+      navItems: 
+      { home: '/', 
+        About: '/',
+      },
     };
   },
 };
