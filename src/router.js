@@ -27,7 +27,7 @@ const router = new Router({
       component: loadView('tour/TourDetails'),
     },
     {
-      path: '/tour/:id/book',
+      path: '/tour/:id/book/:event',
       name: 'tourBooking',
       component: loadView('tour/TourBooking'),
     },

@@ -2,21 +2,18 @@
   <v-form @submit.prevent="onSubmit" ref="form" v-model="valid" :lazy-validation="true">
     <v-layout row wrap justify-center fill-height>
       <v-flex xs12 sm10 lg6>
-        <v-card class="elevation-9 pb-3" :class="{ 'mt-0': $vuetify.breakpoint.smAndDown, 'mt-5': $vuetify.breakpoint.mdAndUp }">
+        <v-card v-if="event" class="elevation-9 pb-3" :class="{ 'mt-0': $vuetify.breakpoint.smAndDown, 'mt-5': $vuetify.breakpoint.mdAndUp }">
           <v-card-text class="text-xs-center">
             <h2>Buchungsanfrage</h2>
           </v-card-text>
           <v-divider />
           <v-card-text class="text-xs-center">
-            <h3>Travemünder Woche</h3>
+            <h3>{{ tour.title }}</h3>
           </v-card-text>
           <v-card-text class="text-xs-center">
-            <h3>Abendtörn</h3>
-            <span>19.07.2018</span>
-            <br>
-            <span>Start 18:00</span>
-            <br>
-            <span>End 22:00</span>
+            <h3>{{ event.title }}</h3>
+            <p>Start: {{ event.start }} um {{ event.startTime }} Uhr</p>
+            <p>Ende: {{ event.end }} um {{ event.endTime }} Uhr</p>
           </v-card-text>
           <v-divider class="mb-3"/>
           <v-layout row wrap>
@@ -113,6 +110,15 @@ export default {
     id() {
       return this.$route.params.id;
     },
+    tour() {
+      return this.$store.state.tours[this.id];
+    },
+    eventId() {
+      return this.$route.params.event;
+    },
+    event() {
+      return (this.tour && this.tour.events) ? this.tour.events[this.eventId] || null : null;
+    },
     items() {
       return [
         { text: '1 Person', value: 1 },
@@ -124,6 +130,11 @@ export default {
       ];
     },
   },
+  watch: {
+    id() {
+      this.loadContent();
+    },
+  },
   methods: {
     book() {
       // TODO
@@ -133,6 +144,12 @@ export default {
         this.dialog = true;
       }
     },
+    loadContent() {
+      this.$store.dispatch('loadTour', this.id);
+    },
+  },
+  beforeMount() {
+    this.loadContent();
   },
 };
 </script>
