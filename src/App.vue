@@ -25,8 +25,8 @@
       <v-list class="pt-0" three-line>
         <div v-for="item in navItems" :key="item.id">
           <v-list-tile>
-            <v-list-tile-title class="headline">
-              <router-link :to="{ name: item.to }">{{ item.title }}</router-link>
+            <v-list-tile-title class="headline pr-1">
+              <router-link style="color: black;" :to="{ name: item.to }">{{ item.title }}</router-link>
               </v-list-tile-title>
           </v-list-tile>
           <v-divider></v-divider>
@@ -35,8 +35,23 @@
       <v-spacer></v-spacer>
       <v-list>
         <v-list-tile>
-          <v-list-tile-title><h3>Impressum</h3></v-list-tile-title>
-          <v-list-tile-title><h3>Datenschutz</h3></v-list-tile-title>
+          <v-list-tile-title>
+            <h3>
+              <router-link
+                :to="{ name: 'imprint' }"
+                class="toolbar-title"
+              >Impressum</router-link>
+            </h3>
+            </v-list-tile-title>
+
+             <v-list-tile-title>
+            <h3>
+              <router-link
+                :to="{ name: 'dataprotection' }"
+                class="toolbar-title"
+              >Datenschutz</router-link>
+            </h3>
+            </v-list-tile-title>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
@@ -63,7 +78,7 @@ export default {
   text-decoration: inherit;
 }
 
-  .router-link {padding: 5px;text-decoration: none;}
-  .router-link:visited {color: black;}
-  .router-link.router-link-active {color: black; background-color: black; text-decoration: none;}
+.v-list__tile__title {
+  text-align: right !important;
+}
 </style>
