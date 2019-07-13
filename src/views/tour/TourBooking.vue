@@ -1,5 +1,5 @@
 <template>
-  <v-form @submit.prevent="onSubmit" ref="form" v-model="valid" :lazy-validation="true">
+  <v-form @submit.prevent="book" ref="form" v-model="valid" :lazy-validation="true">
     <v-layout row wrap justify-center fill-height>
       <v-flex xs12 sm10 lg6>
         <v-card v-if="event" class="elevation-9 pb-3" :class="{ 'mt-0': $vuetify.breakpoint.smAndDown, 'mt-5': $vuetify.breakpoint.mdAndUp }">
@@ -24,37 +24,42 @@
                 box
                 label="Voller Name"
                 type="text"
+                name="name"
+                autocomplete="name"
                 prepend-inner-icon="person"
-                :rules="nameRules"
-                required
-                />
+                :rules="nameRules" />
               <v-text-field
                 v-model="email"
                 box
                 label="Email Adresse"
                 type="email"
+                name="email"
+                autocomplete="email"
                 prepend-inner-icon="email"
-                :rules="emailRules"
-                required />
+                :rules="emailRules" />
               <v-text-field
                 v-model="phone"
                 box
                 label="Telephonnumer (optional)"
-                type="phone"
+                type="tel"
+                name="phone"
+                autocomplete="tel"
                 prepend-inner-icon="phone"
-                :rules="phoneRules"
-                required />
+                :rules="phoneRules" />
               <v-select
+                v-model="persons"
                 box
+                :rules="personsRules"
                 :items="items"
-                label="Anzahl der Personen"
-                :value="1" />
+                label="Anzahl der Personen" />
             </v-flex>
           </v-layout>
           <v-layout>
             <v-flex xs10 offset-xs1>
               <v-textarea
+                v-model="message"
                 box
+                autocomplete="none"
                 label="Eigene Nachricht (optional)" />
             </v-flex>
           </v-layout>
@@ -107,6 +112,11 @@ export default {
       phoneRules: [
         // v => /\d+/.test(v) || 'Die Telefonnummer darf nur Nummern enthalten',
       ],
+      persons: null,
+      personsRules: [
+        v => !!v || 'Bitte wählen Sie die Anzahl an Personen aus.',
+      ],
+      message: '',
     };
   },
   computed: {
@@ -124,6 +134,7 @@ export default {
     },
     items() {
       return [
+        { text: 'Bitte wählen', value: null },
         { text: '1 Person', value: 1 },
         { text: '2 Personen', value: 2 },
         { text: '3 Personen', value: 3 },
@@ -142,12 +153,27 @@ export default {
     date: convertDate,
   },
   methods: {
-    book() {
-      // TODO
-    },
-    onSubmit() {
-      if (this.$refs.form.validate()) {
+    async book() {
+      if (!this.$refs.form.validate()) {
+        return;
+      }
+
+      const booking = {
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        persons: this.persons,
+        message: this.message,
+        event: this.eventId,
+        tour: this.id,
+      };
+
+      const res = await this.$store.dispatch('bookTour', booking);
+      if (res) {
         this.dialog = true;
+      } else {
+        console.log('Die Buchung ist leider fehlgeschalgen!');
+        // TODO: error -> show alert
       }
     },
     loadContent() {

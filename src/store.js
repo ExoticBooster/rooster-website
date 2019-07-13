@@ -103,6 +103,19 @@ const store = new Vuex.Store({
 
       commit('addTour', { id, tour: doc.data() });
     },
+
+    async bookTour({}, booking) {
+      booking.created = new Date();
+
+      try {
+        await db.collection("bookings").add(booking);
+      } catch (e) {
+        console.log(e);
+        return false;
+      }
+
+      return true;
+    },
   },
 });
 
