@@ -53,7 +53,7 @@ const router = new Router({
           name: 'admin',
           component: loadView('admin/AdminHome'),
         },
-      ]
+      ],
     },
     {
       path: '/imprint',
