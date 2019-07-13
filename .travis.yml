@@ -13,5 +13,5 @@ deploy:
   skip_cleanup: true
   provider: firebase
   token:
-    secure: $FIREBASE_TOKEN
-  project: $FIREBASE_PROJECT
+    secure: "joBskZAmwOf4ZpY88FEt/ppBWO1GAlZ/GNYolnwnNsqkTb4wMC9j39ffsvQKOkGYWtQnE3iwjOtR+77pn8bN42lrsAuB24NWPEaW4PoUYbAj3ITnJ/xFUHMf1eOyXVO4J9lxD9XB2+M+0cQhdIBKx40oXrnoUqQNT+X0fBSUGHLTgEVpC8gaE7GVIDB3HTs4K7QBcfNJ2WYw6gonmViaUsBtdB91BertZvCAAV0AyjYnRFTW8xexdyv4WLqNT8bqzsuqwtfTC/bvwO0rfn4c+SdiN6xD3928yPT63yHJ+HJF/5CCepxV7pJIEIlu0ZhsRuELijLs+jSZVIF0weCJT9qr5+/+UN1JQLpGM/aZUv6Dpz+4yjwTHoQV4zeXr1hnB+ehr/joXGhn9OsSlIk8izMHlVbgoPwCbcYDzUZ9eXS6G8y7Y8ypiOxiasrVutlXZOuUgpQdR/RBSEQKDT89CtxLqFVb52ksXW/ny9mSQo+2zoX/woji25I2GJ7rEvHOQFT0aHzlZoNeU/FuxdM4NBhMEJrxGGK3HkNGP6/17qU4Fi+N7r1M+ntZ+kT8zcwzhm1htUDK1TBKQxE9Gx2P/e22GHP7wKfpQuaGnGL0hD3dEPZRYf3ufG1OWB0eR9OWtN/F8RxZ7JFHp8v+pOMAkh02nETXgM6tSydHa+lNBkg="
+  project: "rooster-4faf7"
