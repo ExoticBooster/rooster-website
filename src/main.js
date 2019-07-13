@@ -1,12 +1,13 @@
-import './firebase';
 import Vue from 'vue';
 import VCalendar from 'v-calendar';
 import Vuetify from 'vuetify';
-import App from './App.vue';
-import router from './router';
-import store from './store';
-// TODO: reenable service-worker
-// import './registerServiceWorker';
+import App from '@/App.vue';
+import router from '@/router';
+import store from '@/store';
+import tracking from '@/tracking';
+import '@/registerServiceWorker';
+import '@/firebase';
+
 import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 
 Vue.config.productionTip = false;
@@ -20,3 +21,5 @@ new Vue({
   store,
   render(h) { return h(App); },
 }).$mount('#app');
+
+tracking.init(router);

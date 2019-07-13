@@ -18,7 +18,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.vue'],
+      files: ['*.vue', '*.html'],
       rules: {
         'max-len': 'off'
       }
