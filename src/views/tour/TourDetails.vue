@@ -52,7 +52,7 @@
               </v-list-tile-content>
               <v-list-tile-action>
                 <v-btn v-if="event.booked" depressed small color="error">ausgebucht</v-btn>
-                <v-btn v-else :to="{ name: 'tourBooking', params: { id, event: key }}" small color="success">buchen</v-btn>
+                <v-btn v-else :to="{ name: 'tourBooking', params: { id, event: key }}" small color="success">Anfragen</v-btn>
               </v-list-tile-action>
             </v-list-tile>
           </v-list>
@@ -70,20 +70,7 @@
 </template>
 
 <script>
-import moment from 'moment';
-
-function convertDate(value, format) {
-  if (format === 'short') {
-    return moment(value).format('DD.MM');
-  }
-
-  if (format === 'normal') {
-    return moment(value).format('DD.MM.YYYY');
-  }
-
-  // Für Kalendar MM.DD.YYYY
-  return moment(value).toDate();
-}
+import { convertDate, dateEqual } from '@/utils';
 
 export default {
   name: 'TourDetails',
@@ -119,7 +106,7 @@ export default {
       }
 
       return Object.keys(this.tour.events)
-        .filter(i => moment(this.tour.events[i].start).isSame(this.selectedDate))
+        .filter(i => dateEqual(this.tour.events[i].start, this.selectedDate))
         .map(i => this.tour.events[i]);
     },
   },

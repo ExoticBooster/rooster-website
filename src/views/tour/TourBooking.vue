@@ -10,10 +10,11 @@
           <v-card-text class="text-xs-center">
             <h3>{{ tour.title }}</h3>
           </v-card-text>
-          <v-card-text class="text-xs-center">
+          <v-card-text class="text-xs-center pt-0">
             <h3>{{ event.title }}</h3>
-            <p>Start: {{ event.start }} um {{ event.startTime }} Uhr</p>
-            <p>Ende: {{ event.end }} um {{ event.endTime }} Uhr</p>
+            <span>Start: {{ event.start | date('normal') }} um {{ event.startTime }} Uhr</span>
+            <br />
+            <span>Ende: {{ event.end | date('normal') }} um {{ event.endTime }} Uhr</span>
           </v-card-text>
           <v-divider class="mb-3"/>
           <v-layout row wrap>
@@ -83,6 +84,8 @@
 </template>
 
 <script>
+import { convertDate } from '@/utils';
+
 export default {
   name: 'TourBooking',
   data() {
@@ -134,6 +137,9 @@ export default {
     id() {
       this.loadContent();
     },
+  },
+  filters: {
+    date: convertDate,
   },
   methods: {
     book() {
