@@ -23,13 +23,13 @@
           </div>
         </v-card-title>
         <v-card-actions>
-          <v-btn flat color="">mehr</v-btn>
+          <v-btn flat :to="{name: 'about'}">mehr</v-btn>
         </v-card-actions>
       </v-card>
       <!-- About Me end -->
 
       <!-- Tour Carousel Begin -->
-      <v-carousel v-if="toursSize > 0" class="elevation-0" hide-delimiters :cycle="false">
+      <v-carousel v-if="toursSize > 0" class="elevation-0" hide-controls hide-delimiters :cycle="false">
         <v-carousel-item v-for="tour in tours" :key="tour.docID">
           <v-card class="mt-4">
             <v-img class="white--text" height="175px" :src="tour.cover">

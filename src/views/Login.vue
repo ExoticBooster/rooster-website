@@ -9,8 +9,8 @@
 
         <v-layout justify-center>
           <v-flex xs10>
-            <v-alert :value="!!errorMessage" color='error' outline xs>
-              {{ errorMessage }}
+            <v-alert :value="!!loginErrorMessage" color='error' outline xs>
+              {{ loginErrorMessage }}
             </v-alert>
           </v-flex>
         </v-layout>
@@ -62,12 +62,10 @@ export default {
     },
   },
   computed: {
-    errorMessage() {
-      return this.$store.getters.getLoginErrorMessage;
-    },
     ...mapState([
       'authPending',
       'user',
+      'loginErrorMessage',
     ]),
   },
   watch: {
