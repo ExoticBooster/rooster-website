@@ -72,7 +72,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .toolbar-title {
   color: inherit;
   text-decoration: inherit;
