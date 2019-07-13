@@ -58,7 +58,7 @@
           </v-list>
         </template>
         <v-card-text v-else>
-          <span>Am 28.7.2019 bieten wir leider keine Touren an. Wähle Sie gerne einen anderen Tag.</span>
+          <span>Am {{ selectedDate | date('normal') }} bieten wir leider keine Touren an. Wählen Sie gerne einen anderen Tag.</span>
         </v-card-text>
         <v-card-actions class="mt-auto">
           <v-spacer></v-spacer>
