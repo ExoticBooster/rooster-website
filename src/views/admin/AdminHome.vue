@@ -66,11 +66,6 @@ export default {
   },
 
   methods: {
-    async logout() {
-      await this.$store.dispatch('logout');
-      this.$router.push({ name: 'login' });
-    },
-
     loadContent() {
       this.$store.dispatch('loadTour', this.id);
     },

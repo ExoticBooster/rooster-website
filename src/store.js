@@ -9,6 +9,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     user: null,
+    authenticated: localStorage.getItem('authenticated') || false,
     authPending: false,
     loginErrorMessage: null,
     tours: {},
@@ -23,6 +24,8 @@ const store = new Vuex.Store({
   mutations: {
     setUser(state, user) {
       state.user = user;
+      state.authenticated = !!user;
+      localStorage.setItem('authenticated', state.authenticated);
     },
     setLoginErrorMessage(state, msg) {
       state.loginErrorMessage = msg;
