@@ -49,10 +49,10 @@ export default {
   data() {
     return {
       drawer: false,
-      navItems: 
-      { home: '/', 
-        About: '/',
-      },
+      navItems: [
+        { title: 'Home', to: 'home' },
+        { title: 'About Me', to: 'about' },
+      ],
     };
   },
 };
