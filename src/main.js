@@ -5,6 +5,7 @@ import Vuetify from 'vuetify';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+// TODO: reenable service-worker
 // import './registerServiceWorker';
 import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 
