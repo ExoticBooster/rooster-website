@@ -68,8 +68,8 @@ const router = new Router({
     {
       path: '/about',
       name: 'about',
-      component: loadView('About')
-    }
+      component: loadView('About'),
+    },
   ],
 });
 

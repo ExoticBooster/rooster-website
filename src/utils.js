@@ -16,3 +16,9 @@ export function convertDate(value, format) {
 export function dateEqual(d1, d2) {
   return moment(d1).isSame(d2);
 }
+
+export function log(...args) {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(...args);
+  }
+}

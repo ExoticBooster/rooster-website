@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { convertDate } from '@/utils';
+import { convertDate, log } from '@/utils';
 
 export default {
   name: 'TourBooking',
@@ -172,7 +172,7 @@ export default {
       if (res) {
         this.dialog = true;
       } else {
-        console.log('Die Buchung ist leider fehlgeschalgen!');
+        log('Die Buchung ist leider fehlgeschalgen!');
         // TODO: error -> show alert
       }
     },

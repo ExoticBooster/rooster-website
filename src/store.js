@@ -1,14 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import createPersistedState from 'vuex-persistedstate';
 
-import { auth, db } from './firebase';
+import { log } from '@/utils';
+import { auth, db } from '@/firebase';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  // plugins: [createPersistedState()],
-
   state: {
     user: null,
     authPending: false,
@@ -44,7 +42,7 @@ const store = new Vuex.Store({
         // TODO: add where to only get future tours
         snapshot = await db.collection('tours').get();
       } catch (e) {
-        console.log(e);
+        log(e);
         return;
       }
 
@@ -78,14 +76,14 @@ const store = new Vuex.Store({
     async logout() {
       try {
         await auth.signOut();
-      } catch (error) {
-        console.log(error);
+      } catch (e) {
+        log(e);
       }
     },
 
     async loadTour({ commit, state }, id) {
       if (state.tours[id]) {
-        console.log('Tour already loaded');
+        log('Tour already loaded');
         return;
       }
 
@@ -93,11 +91,12 @@ const store = new Vuex.Store({
       try {
         doc = await db.collection('tours').doc(id).get();
       } catch (e) {
-        console.error(e);
+        log(e);
+        return;
       }
 
       if (!doc.exists) {
-        console.log('Tour not found');
+        log('Tour not found');
         return;
       }
 
@@ -110,7 +109,7 @@ const store = new Vuex.Store({
       try {
         await db.collection('bookings').add(booking);
       } catch (e) {
-        console.log(e);
+        log(e);
         return false;
       }
 
