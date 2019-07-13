@@ -65,6 +65,11 @@ const router = new Router({
       name: 'dataprotection',
       component: loadView('Dataprotection'),
     },
+    {
+      path: '/about',
+      name: 'about',
+      component: loadView('About')
+    }
   ],
 });
 
