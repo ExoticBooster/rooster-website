@@ -42,9 +42,9 @@
     <v-dialog v-if="tour" v-model="dialog" persistent>
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>Touren - {{ selectedDate | date('normal') }} </v-card-title>
-        <template v-if="tour.events && Object.keys(tour.events).length > 0">
+        <template v-if="eventsDate && eventsDate.length > 0">
           <v-list two-line subheader class="">
-            <v-list-tile v-for="(event, key) in tour.events" :key="key" class="pa-0" style="border-bottom: 1px solid #bbb">
+            <v-list-tile v-for="(event, key) in eventsDate" :key="key" class="pa-0" style="border-bottom: 1px solid #bbb">
               <v-list-tile-content>
                 <v-list-tile-title>{{ event.title }}</v-list-tile-title>
                 <v-list-tile-sub-title>Start: {{ event.start | date('short') }} {{ event.startTime }}</v-list-tile-sub-title>
@@ -113,10 +113,14 @@ export default {
         };
       });
     },
-
-    //was sollte hier rein? war vorher leer
     eventsDate() {
-      return 'hallo';
+      if (!this.selectedDate) {
+        return [];
+      }
+
+      return Object.keys(this.tour.events)
+        .filter(i => moment(this.tour.events[i].start).isSame(this.selectedDate))
+        .map(i => this.tour.events[i]);
     },
   },
   watch: {
