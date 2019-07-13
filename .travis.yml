@@ -1,17 +1,24 @@
 language: node_js
+
 node_js:
   - "11.0"
+
+env:
+  TOKEN: "AhOM1Dh1tQJadG3YK8bkZTMBons7zF4RIi7cjMtfMy0K45MKlAV9rkBC09QxnmUHDsCTEe5VgOkfGfl6uOzvjVaFQSPDHUX838S2PpU3rqEbvSTnoOIm1J9xzvgk5oAb/sDuUmKqCVy6b12y9QEpQiTw75vtXIJ43XZdqw1KdAuwQP2Ivt/O5yS9mIJAQo1fhgg5GoRj1wJy3l7i3a2uDpkT+M+oojg1iBlvOh5kcVW1qCAiFYHnA2OT6tikfoRLtFMJ7mdJE2zSNDSfuRctcBLpIgsuxc8nZrZ8EyhdDrQMou34yYbauXIJnqdQiJCcy59RPVFXWG6ecyAipisdhyBdI3GzTQTmGEnGcxwEA/R1REWn3zDOAGap+itqLn8tPgbt9D86/EQomyM5r9dyk8UFl6y2/FJH/FP36bMEDURq8higCGIc7JaZY2LjHjC5d+pLxZy1oo52x7a3FGkSvtqAcevMO+yY/t6jktWGnoL7LxMXpJ5B+W/Khy7qN2lWCOqgQVGTI6ToA0x1YTzFtRLBNUN/AxhZ3XV3EANY4qPHd5e5LmWHsM3OiksvH869mRk//I3T1FWOirUyaIEdtXd2hMHupM7IqMm8HL/U0YzvZUv5Ihi89fGLRObzWUZhQrduYVjaU2/UJzDysWQ7+DMToIr3RZwcKV8qeJGZTP4="
+
 branches:
   only:
     - master
+
 before_script:
-  - npm install -g @vue/cli
+  - npm install -g @vue/cli firebase-tools
+
 script:
   - npm install
   - npm run build
+  - cd functions && npm install
+
 deploy:
   skip_cleanup: true
-  provider: firebase
-  token:
-    secure: "AhOM1Dh1tQJadG3YK8bkZTMBons7zF4RIi7cjMtfMy0K45MKlAV9rkBC09QxnmUHDsCTEe5VgOkfGfl6uOzvjVaFQSPDHUX838S2PpU3rqEbvSTnoOIm1J9xzvgk5oAb/sDuUmKqCVy6b12y9QEpQiTw75vtXIJ43XZdqw1KdAuwQP2Ivt/O5yS9mIJAQo1fhgg5GoRj1wJy3l7i3a2uDpkT+M+oojg1iBlvOh5kcVW1qCAiFYHnA2OT6tikfoRLtFMJ7mdJE2zSNDSfuRctcBLpIgsuxc8nZrZ8EyhdDrQMou34yYbauXIJnqdQiJCcy59RPVFXWG6ecyAipisdhyBdI3GzTQTmGEnGcxwEA/R1REWn3zDOAGap+itqLn8tPgbt9D86/EQomyM5r9dyk8UFl6y2/FJH/FP36bMEDURq8higCGIc7JaZY2LjHjC5d+pLxZy1oo52x7a3FGkSvtqAcevMO+yY/t6jktWGnoL7LxMXpJ5B+W/Khy7qN2lWCOqgQVGTI6ToA0x1YTzFtRLBNUN/AxhZ3XV3EANY4qPHd5e5LmWHsM3OiksvH869mRk//I3T1FWOirUyaIEdtXd2hMHupM7IqMm8HL/U0YzvZUv5Ihi89fGLRObzWUZhQrduYVjaU2/UJzDysWQ7+DMToIr3RZwcKV8qeJGZTP4="
-  project: "rooster-4faf7"
+  provider: script
+  script: firebase deploy --only hosting,functions --token $FIREBASE_TOKEN
