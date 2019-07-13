@@ -19,6 +19,7 @@ export function dateEqual(d1, d2) {
 
 export function log(...args) {
   if (process.env.NODE_ENV !== 'production') {
-    console.log(...args);
+     // eslint-disable-next-line no-console
+     console.log(...args);
   }
 }
