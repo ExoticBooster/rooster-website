@@ -36,6 +36,10 @@ const store = new Vuex.Store({
   },
 
   actions: {
+    async setEvent(value) {
+      console.log(value);
+    },
+
     async loadTours(state) {
       let snapshot;
       try {
