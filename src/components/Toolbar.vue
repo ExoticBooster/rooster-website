@@ -9,7 +9,14 @@
       <router-link :to="{ name: 'home' }" class="toolbar-title">Rooster on the Sea</router-link>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-toolbar-side-icon @click.stop="$emit('toggleMenu')" />
+    <v-layout class="hidden-sm-and-down">
+      <v-toolbar-items>
+        <router-link class="toolbar-item"> hallo</router-link>
+      </v-toolbar-items>
+    </v-layout>
+    <v-layout class="hidden-md-and-up">
+      <v-toolbar-side-icon @click.stop="$emit('toggleMenu')" />
+    </v-layout>
   </v-toolbar>
 </template>
 
