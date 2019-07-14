@@ -33,6 +33,7 @@
         </v-flex>
         <!-- Card Callendar -->
         <v-flex mx-3>
+          <v-subheader class=" pl-1">Bite wählen sie einen Termin: </v-subheader>
           <vc-calendar title-position="left" is-expanded :attributes="events" @dayclick="showTours"/>
         </v-flex>
       </v-card>
