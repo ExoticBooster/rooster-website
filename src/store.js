@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     tours: {},
     bookings: {},
     messages: {},
+    snackbar: null,
   },
 
   getters: {
@@ -48,6 +49,9 @@ const store = new Vuex.Store({
     },
     setAuthPending(state, pending) {
       state.authPending = pending;
+    },
+    snack(state, text) {
+      state.snackbar = text;
     },
   },
 
@@ -217,6 +221,17 @@ const store = new Vuex.Store({
 
       try {
         await db.collection('messages').add(message);
+      } catch (e) {
+        log(e);
+        return false;
+      }
+
+      return true;
+    },
+
+    async updateTour(ctx, { id, updates }) {
+      try {
+        await db.collection('tours').doc(id).set(updates, { merge: true });
       } catch (e) {
         log(e);
         return false;
