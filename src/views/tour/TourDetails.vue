@@ -17,7 +17,7 @@
           <h5>{{ tour.startDate }} - {{ tour.endDate }}</h5>
           <!-- Card Text -->
         </v-card-title>
-        <v-card-text>{{ tour.description }}</v-card-text>
+        <v-card-text class="description" v-html="tour.description"></v-card-text>
         <!-- Card Thumbnails for Gallery
             #TODO:
             - Dont load the pictures in full resulution just for Thumbnails!
@@ -137,5 +137,10 @@ export default {
 <style scoped>
 .rounded{
   border-radius: 5px;
+}
+
+.description {
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 </style>
