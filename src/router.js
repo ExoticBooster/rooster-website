@@ -76,7 +76,7 @@ const router = new Router({
   ],
 });
 
-router.beforeEach((sto, from, next) => {
+router.beforeEach((to, from, next) => {
   const { currentUser } = auth;
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
