@@ -33,7 +33,8 @@
         </v-flex>
         <!-- Card Callendar -->
         <v-flex mx-3>
-          <vc-calendar title-position="left" is-expanded :attributes="events" @dayclick="showTours"/>
+          <v-subheader class=" pl-1">Bite wählen sie einen Termin: </v-subheader>
+          <vc-calendar class="mt-0 pt-0" title-position="left" is-expanded :attributes="events" @dayclick="showTours"/>
         </v-flex>
       </v-card>
       <v-progress-circular v-else :width="5" color="primary" indeterminate />
