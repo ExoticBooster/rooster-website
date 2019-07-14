@@ -23,11 +23,11 @@
           prepend-inner-icon="person" />
 
         <v-textarea
-              v-model="description"
-              box
-              rows="20"
-              autocomplete="none"
-              label="Beschreibung" />
+          v-model="description"
+          box
+          rows="20"
+          autocomplete="none"
+          label="Beschreibung" />
       </v-flex>
 
       <v-list two-line>
@@ -83,20 +83,19 @@ export default {
     tourId() {
       this.loadTour();
     },
-    tour(tour) {
-      if (!tour) return;
-
-      this.title = tour.title;
-      this.excerpt = tour.excerpt;
-      this.description = tour.description;
-    },
   },
   filters: {
     date: convertDate,
   },
   methods: {
-    loadTour() {
-      this.$store.dispatch('loadTour', this.tour);
+    async loadTour() {
+      await this.$store.dispatch('loadTour', this.tourId);
+
+      if (this.tour) {
+        this.title = this.tour.title;
+        this.excerpt = this.tour.excerpt;
+        this.description = this.tour.description;
+      }
     },
     async save() {
       const updates = {
