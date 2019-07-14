@@ -3,7 +3,7 @@
     <v-flex>
       <v-list v-if="loaded">
         <v-flex v-for="booking in bookings" :key="booking.id">
-          <v-list-tile @click="openBooking(booking.id)" avatar>
+          <v-list-tile :to="{ name: 'adminBooking', params: { booking: booking.id } }" avatar>
             <v-list-tile-avatar>
               <v-icon large color="grey">account_circle</v-icon>
             </v-list-tile-avatar>
@@ -37,9 +37,6 @@ export default {
     },
   },
   methods: {
-    openBooking(bookingId) {
-      this.$router.push({ name: 'adminBooking', params: { booking: bookingId } });
-    },
     tour(booking) {
       return this.loaded ? this.tours[booking.tour] : null;
     },
