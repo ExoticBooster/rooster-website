@@ -126,5 +126,16 @@ auth.onAuthStateChanged((user) => {
   store.commit('setUser', user || null);
 });
 
+// realtime updates for tours
+// TODO: handle delete
+db.collection('tours').onSnapshot((querySnapshot) => {
+  querySnapshot.docChanges().forEach((change) => {
+    const tour = change.doc.data();
+    tour.id = change.doc.id;
+    store.commit('addTour', { id: change.doc.id, tour });
+  });
+}, (err) => {
+  log(`Encountered error: ${err}`);
+});
 
 export default store;
