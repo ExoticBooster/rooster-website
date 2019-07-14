@@ -45,7 +45,7 @@
               <div class="pl-4">
                 <span v-if="tour.subtitle">{{ tour.subtitle || ''}}</span><br>
                 <h5 v-if="tour.startDate && tour.endDate">{{ tour.startDate }} - {{ tour.endDate }}</h5>
-                <span>{{ tour.expcert || tour.description | truncate(80, '...') }}</span><br>
+                <span>{{ tour.excerpt || (tour.description | truncate(80, '...')) }}</span><br>
               </div>
             </v-card-title>
             <v-card-actions>
