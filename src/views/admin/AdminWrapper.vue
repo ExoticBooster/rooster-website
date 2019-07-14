@@ -7,7 +7,9 @@
       <v-spacer></v-spacer>
       <v-tab @click="logout">Logout</v-tab>
     </v-tabs>
-    <router-view></router-view>
+    <v-card>
+      <router-view></router-view>
+    </v-card>
   </v-flex>
 </template>
 

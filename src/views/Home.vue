@@ -29,7 +29,7 @@
       <!-- About Me end -->
 
       <!-- Tour Carousel Begin -->
-      <v-carousel v-if="toursSize > 0" class="elevation-0" hide-controls hide-delimiters :cycle="false">
+      <v-carousel v-if="loaded" class="elevation-0" hide-controls hide-delimiters :cycle="false">
         <v-carousel-item v-for="tour in tours" :key="tour.docID">
           <v-card class="mt-4">
             <v-img class="white--text" height="175px" :src="tour.cover">
@@ -45,7 +45,7 @@
               <div class="pl-4">
                 <span v-if="tour.subtitle">{{ tour.subtitle || ''}}</span><br>
                 <h5 v-if="tour.startDate && tour.endDate">{{ tour.startDate }} - {{ tour.endDate }}</h5>
-                <span>{{ tour.description | truncate(80, '...') }}</span><br>
+                <span>{{ tour.expcert || tour.description | truncate(80, '...') }}</span><br>
               </div>
             </v-card-title>
             <v-card-actions>
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'Home',
@@ -77,9 +77,9 @@ export default {
     ...mapState([
       'tours',
     ]),
-    ...mapGetters([
-      'toursSize',
-    ]),
+    loaded() {
+      return Object.keys(this.tours).length > 0;
+    },
   },
   beforeMount() {
     this.$store.dispatch('loadTours');

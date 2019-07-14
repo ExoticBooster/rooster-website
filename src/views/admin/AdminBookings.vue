@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-flex>
-      <v-list v-if="loaded">
+      <v-list v-if="loaded" class="pa-0">
         <v-flex v-for="booking in bookings" :key="booking.id">
           <v-list-tile :to="{ name: 'adminBooking', params: { booking: booking.id } }" avatar>
             <v-list-tile-avatar>
@@ -17,7 +17,6 @@
           <v-divider :inset="true"></v-divider>
         </v-flex>
       </v-list>
-      <v-progress-circular v-else :width="5" color="primary" indeterminate />
     </v-flex>
   </v-layout>
 </template>

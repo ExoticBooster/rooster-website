@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-flex>
-      <v-list v-if="toursSize > 0">
+      <v-list v-if="loaded" class="pa-0">
         <v-list-tile v-for="tour in tours" :key="tour.id" avatar :to="{ name: 'adminTour', params: { id: tour.id } }">
           <v-list-tile-avatar>
             <img :src="tour.cover">
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: 'AdminHome',
@@ -27,9 +27,9 @@ export default {
     ...mapState([
       'tours',
     ]),
-    ...mapGetters([
-      'toursSize',
-    ]),
+    loaded() {
+      return Object.keys(this.tours).length > 0;
+    },
   },
   methods: {
     loadContent() {
@@ -39,7 +39,6 @@ export default {
       this.dialog = true;
       this.selectedDate = days.date;
     },
-
   },
   beforeMount() {
     this.$store.dispatch('loadTours');

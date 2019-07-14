@@ -18,9 +18,6 @@ const store = new Vuex.Store({
   },
 
   getters: {
-    toursSize(state) {
-      return Object.keys(state.tours).length;
-    },
     getBookingMessages(state) {
       return bookingId => state.messages[bookingId];
     },
