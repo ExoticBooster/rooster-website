@@ -54,4 +54,9 @@ export default {
 .v-list__tile__title {
   text-align: right !important;
 }
+
+.toolbar-title{
+  color: black;
+  text-decoration: none;
+}
 </style>
