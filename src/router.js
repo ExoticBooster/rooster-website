@@ -56,6 +56,26 @@ const router = new Router({
           name: 'admin',
           component: loadView('admin/AdminHome'),
         },
+        {
+          path: '/tour/:id/',
+          name: 'adminTour',
+          component: loadView('admin/AdminTour'),
+        },
+        {
+          path: '/bookings',
+          name: 'adminBookings',
+          component: loadView('admin/AdminBookings'),
+        },
+        {
+          path: '/booking/:booking',
+          name: 'adminBooking',
+          component: loadView('admin/AdminBooking'),
+        },
+        {
+          path: '/texts',
+          name: 'adminTexts',
+          component: loadView('admin/AdminTexts'),
+        },
       ],
     },
     {

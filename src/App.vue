@@ -13,8 +13,14 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer" />
     </v-toolbar>
     <v-content>
-      <router-view></router-view>
+      <v-container>
+        <router-view></router-view>
+      </v-container>
     </v-content>
+    <v-footer class="pa-3 mt-auto">
+      <v-spacer></v-spacer>
+      <div>&copy; {{ new Date().getFullYear() }}</div>
+    </v-footer>
     <v-navigation-drawer
       style="display:flex;flex-direction:column;"
       v-model="drawer"

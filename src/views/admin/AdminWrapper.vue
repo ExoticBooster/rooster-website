@@ -1,8 +1,14 @@
 <template>
-  <div>
-    <v-btn @click="logout">logout</v-btn>
+  <v-flex>
+    <v-tabs v-model="tab" color="grey lighten-3" slider-color="indigo">
+      <v-tab :to="{ name: 'admin' }">Touren</v-tab>
+      <v-tab :to="{ name: 'adminBookings' }">Buchungen</v-tab>
+      <v-tab :to="{ name: 'adminTexts' }">Texte anpassen</v-tab>
+      <v-spacer></v-spacer>
+      <v-tab @click="logout">Logout</v-tab>
+    </v-tabs>
     <router-view></router-view>
-  </div>
+  </v-flex>
 </template>
 
 <script>
@@ -12,8 +18,7 @@ export default {
   name: 'AdminWrapper',
   data() {
     return {
-      dialog: false,
-      selectedDate: null,
+      tab: this.$route.path,
     };
   },
   computed: {
