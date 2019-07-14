@@ -17,5 +17,5 @@ script:
 deploy:
   skip_cleanup: true
   provider: script
-  script: firebase deploy --only hosting,storage,firestore --token $FIREBASE_TOKEN
+  script: firebase deploy --non-interactive --only hosting,storage,firestore --token $FIREBASE_TOKEN
   message: build $TRAVIS_BUILD_NUMBER $TRAVIS_BRANCH/$COMMIT_HASH
