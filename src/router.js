@@ -97,11 +97,10 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-<<<<<<< HEAD
   const { currentUser } = auth;
-=======
-  const { authenticated } = store.state;
->>>>>>> 48e030c7d00732686d85419a57483fe84b81354a
+
+ /*  const { authenticated } = store.state;
+   */
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && !authenticated) {
