@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import { auth } from './firebase';
+import store from '@/store';
 
 Vue.use(Router);
 
@@ -56,6 +56,26 @@ const router = new Router({
           name: 'admin',
           component: loadView('admin/AdminHome'),
         },
+        {
+          path: 'tour/:id/',
+          name: 'adminTour',
+          component: loadView('admin/AdminTour'),
+        },
+        {
+          path: 'bookings',
+          name: 'adminBookings',
+          component: loadView('admin/AdminBookings'),
+        },
+        {
+          path: 'booking/:booking',
+          name: 'adminBooking',
+          component: loadView('admin/AdminBooking'),
+        },
+        {
+          path: 'texts',
+          name: 'adminTexts',
+          component: loadView('admin/AdminTexts'),
+        },
       ],
     },
     {
@@ -77,10 +97,14 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+<<<<<<< HEAD
   const { currentUser } = auth;
+=======
+  const { authenticated } = store.state;
+>>>>>>> 48e030c7d00732686d85419a57483fe84b81354a
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !currentUser) {
+  if (requiresAuth && !authenticated) {
     next('login');
   } else {
     next();
