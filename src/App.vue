@@ -2,8 +2,8 @@
   <v-app>
     <Toolbar @toggleMenu="drawer = !drawer" />
     <Menu :open="drawer" @toggleMenu="drawer = !drawer" />
-    <v-content>
-      <v-container class="pa-0">
+    <v-content class="px-0 mx-0">
+      <v-container class="px-0 mt-0 pt-0 mx-0" fluid>
         <router-view></router-view>
       </v-container>
     </v-content>
