@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Menu',
   props: {
@@ -41,11 +43,13 @@ export default {
   },
   data() {
     return {
-      navItems: [
-        { title: 'Home', to: 'home' },
-        { title: 'About Me', to: 'about' },
-      ],
     };
+  },
+
+  computed: {
+    ...mapState([
+      'navItems',
+    ]),
   },
 };
 </script>

@@ -10,17 +10,23 @@
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-btn class="hidden-sm-and-down white--text itemText" flat>Info</v-btn>
-      <v-btn class="hidden-sm-and-down white--text itemText" flat>Törns</v-btn>
-      <v-btn class="hidden-sm-and-down white--text itemText" flat>Gallerie</v-btn>
+      <v-btn  v-for="item in navItems" :key="item.id" class="hidden-sm-and-down white--text itemText" flat :to="{ name: item.to}">{{item.title}}</v-btn>
     </v-toolbar-items>
     <v-toolbar-side-icon class="hidden-md-and-up" @click.stop="$emit('toggleMenu')" />
   </v-toolbar>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Toolbar',
+
+  computed: {
+    ...mapState([
+      'navItems',
+    ]),
+  },
 };
 </script>
 
