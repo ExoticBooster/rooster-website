@@ -30,23 +30,23 @@
         </v-card-actions>
       </v-card> -->
       <!-- About Me end -->
-
-      <v-carousel
-        @hover="()=> {hide = !hide}"
-        hide-delimiters
-        hide-controls
-        height="40%"
-        class="pb-0"
-      >
-      <v-carousel-item>
-        <v-img
-        class="mainImg"
-        conatin
-        mb-5
-        src="https://firebasestorage.googleapis.com/v0/b/rooster-4faf7.appspot.com/o/IMG_20190623_132901.jpg?alt=media&token=ea2b0385-2b90-4952-9f7d-1ddb678b2936"
-        ></v-img>
-      </v-carousel-item>
-      </v-carousel>
+      <v-parallax>
+        <v-carousel
+          @hover="()=> {hide = !hide}"
+          hide-delimiters
+          hide-controls
+          height="100%"
+          class="pb-0"
+        >
+          <v-carousel-item>
+            <v-img
+            height="40%"
+            position="50% 75%"
+            src="https://firebasestorage.googleapis.com/v0/b/rooster-4faf7.appspot.com/o/IMG_20190623_132901.jpg?alt=media&token=ea2b0385-2b90-4952-9f7d-1ddb678b2936"
+            ></v-img>
+          </v-carousel-item>
+        </v-carousel>
+      </v-parallax>
 
       <v-layout row fluid class="blue lighten-4">
         <v-flex class="md5 pt-4 px-4" offset-md1>
@@ -54,7 +54,7 @@
             <h3 class=title> Hallo willkommen bei "Rooster" on the sea!
             Mitsegeln auf der Ostsee, individuelle Segeltörns mit kleiner Crew... </h3>
             <br>
-            <p class="body-1">
+            <p class="infoText">
               Seit 2007 organisiere ich Törns zum Mitsegeln auf der Ostsee und im Mittelmeer. Das Angebot einen Segeltörn mit einer Crew, (6 Personen plus Skipper) zu erleben, erfreut sich großer Beliebtheit. Mit einer kleinen Crew segelt es sich entspannter und jeder Teilnehmer hat die Möglichkeit sich an der Schiffsführung zu beteiligen. Navigation, Segel setzen und trimmen, einen gemeinsam festgelegten Kurs steuern. Ich als Skipper gebe Dir Tipps und Du kannst von meiner Erfahrung und den Revierkenntnissen profitieren. <br>
               Dabei sehe ich mich nicht in der Rolle als "Sailing Master" Leutnant William Bligh, sondern als teil der Mannschaft.
               Meine Törns führen im gesammten Baltischen Meer. <br>
@@ -70,6 +70,7 @@
         </v-flex>
         <v-flex class="md6 pt-4 ml-4 pr-4">
           <v-img
+          class="profileBorder"
           src="https://firebasestorage.googleapis.com/v0/b/rooster-4faf7.appspot.com/o/IMG_1277.JPG?alt=media&token=d157d16d-062b-4488-a981-7bbeb697297d"
           >
           </v-img>
@@ -142,5 +143,13 @@ export default {
 </script>
 
 <style scoped>
+.profileBorder{
+  border-style: solid;
+  border-color: #b3d4fc;
+}
 
+.infoText{
+  font-family: 'Karla', sans-serif;
+  font-size: 20px;
+}
 </style>

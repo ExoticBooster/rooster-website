@@ -10,9 +10,9 @@
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-btn class="hidden-sm-and-down white--text" flat>Info</v-btn>
-      <v-btn class="hidden-sm-and-down white--text" flat>Törns</v-btn>
-      <v-btn class="hidden-sm-and-down white--text" flat>Gallerie</v-btn>
+      <v-btn class="hidden-sm-and-down white--text itemText" flat>Info</v-btn>
+      <v-btn class="hidden-sm-and-down white--text itemText" flat>Törns</v-btn>
+      <v-btn class="hidden-sm-and-down white--text itemText" flat>Gallerie</v-btn>
     </v-toolbar-items>
     <v-toolbar-side-icon class="hidden-md-and-up" @click.stop="$emit('toggleMenu')" />
   </v-toolbar>
@@ -28,5 +28,14 @@ export default {
 .toolbar-title {
   color: inherit;
   text-decoration: inherit;
+  font-family: 'Karla', sans-serif;
+  font-size: 25px;
+}
+
+.itemText{
+  color: inherit;
+  text-decoration: inherit;
+  font-family: 'Karla', sans-serif;
+  font-size: 17px;
 }
 </style>
