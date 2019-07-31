@@ -89,10 +89,21 @@ const router = new Router({
       component: loadView('Dataprotection'),
     },
     {
-      path: '/about',
-      name: 'about',
-      component: loadView('About'),
+      path: '/info',
+      name: 'info',
+      component: loadView('Info'),
     },
+    {
+      path: '/gallery',
+      name: 'gallery',
+      component: loadView('Gallery'),
+    },
+    {
+      path: '/tours',
+      name: 'tours',
+      component: loadView('Tours'),
+    },
+
   ],
 });
 
