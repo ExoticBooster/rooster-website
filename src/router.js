@@ -111,7 +111,6 @@ router.beforeEach((to, from, next) => {
 /*   const { currentUser } = auth;
  */
   const { authenticated } = store.state;
-  
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && !authenticated) {

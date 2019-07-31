@@ -17,7 +17,7 @@ const store = new Vuex.Store({
     navItems: [
       { title: 'Infos', to: 'info' },
       { title: 'Törns', to: 'tours' },
-      { title: 'Gallerie', to: 'gallery'}
+      { title: 'Gallerie', to: 'gallery' },
     ],
   },
 
