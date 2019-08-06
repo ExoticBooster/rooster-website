@@ -73,6 +73,15 @@ const store = new Vuex.Store({
       }
     },
 
+    async loadQandA(state) {
+      let snapshot;
+      try {
+        snapshot = await db.collection('infos')
+      }
+    },
+
+    async createQandA(state)
+
     async loadTours(state) {
       let snapshot;
       try {
