@@ -1,8 +1,6 @@
 <template>
   <v-layout row wrap justify-center>
-    <v-flex xs10 sm12 md12 lg12
-    >
-
+    <v-flex xs10 sm12 md12 lg12>
       <!-- Card erst mal raus genommen um die vorherige variante zu erhalten -->
       <!-- About Me Start -->
       <!-- <v-card lg12 md12 class='mx-0 my-0 elevation-1' full-width>
@@ -30,28 +28,27 @@
         </v-card-actions>
       </v-card> -->
       <!-- About Me end -->
-      <v-parallax>
-        <v-carousel
-          @hover="()=> {hide = !hide}"
-          hide-delimiters
-          hide-controls
-          height="100%"
-          class="pb-0"
-        >
-          <v-carousel-item>
-            <v-img
-            height="40%"
-            position="50% 75%"
-            src="https://firebasestorage.googleapis.com/v0/b/rooster-4faf7.appspot.com/o/IMG_20190623_132901.jpg?alt=media&token=ea2b0385-2b90-4952-9f7d-1ddb678b2936"
-            ></v-img>
-          </v-carousel-item>
-        </v-carousel>
-      </v-parallax>
+      <v-carousel
+        @hover="()=> {hide = !hide}"
+        fluid
+        hide-delimiters
+        hide-controls
+        height="20%"
+        class="pb-0"
+      >
+        <v-carousel-item>
+          <v-img
+          height="40%"
+          position="50% 85%"
+          src="https://firebasestorage.googleapis.com/v0/b/rooster-4faf7.appspot.com/o/IMG_20190623_132901.jpg?alt=media&token=ea2b0385-2b90-4952-9f7d-1ddb678b2936"
+          ></v-img>
+        </v-carousel-item>
+      </v-carousel>
 
       <v-layout row fluid class="blue lighten-4">
         <v-flex class="md5 pt-4 px-4" offset-md1>
           <section>
-            <h3 class=title> Hallo willkommen bei "Rooster" on the sea!
+            <h3 class=title> Hallo und willkommen bei "Rooster" on the sea!
             Mitsegeln auf der Ostsee, individuelle Segeltörns mit kleiner Crew... </h3>
             <br>
             <p class="infoText">
@@ -68,7 +65,7 @@
             </p>
           </section>
         </v-flex>
-        <v-flex class="md6 pt-4 ml-4 pr-4">
+        <v-flex class="md4 pt-4 pr-4" offset-md1>
           <v-img
           class="profileBorder"
           src="https://firebasestorage.googleapis.com/v0/b/rooster-4faf7.appspot.com/o/IMG_1277.JPG?alt=media&token=d157d16d-062b-4488-a981-7bbeb697297d"
