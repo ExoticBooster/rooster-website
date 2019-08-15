@@ -20,11 +20,13 @@ const store = new Vuex.Store({
       { title: 'Törns', to: 'tours' },
       { title: 'Gallerie', to: 'gallery' },
     ],
+    messages: {},
+    snackbar: null,
   },
 
   getters: {
-    toursSize(state) {
-      return Object.keys(state.tours).length;
+    getBookingMessages(state) {
+      return bookingId => state.messages[bookingId];
     },
     faqSize(state) {
       return Object.keys(state.faq).length;
@@ -46,29 +48,39 @@ const store = new Vuex.Store({
     addBooking(state, { id, booking }) {
       Vue.set(state.bookings, id, booking);
     },
+    addMessage(state, { id, message }) {
+      const bookingId = message.booking;
+      if (!state.messages[bookingId]) {
+        Vue.set(state.messages, bookingId, {});
+      }
+
+      Vue.set(state.messages[bookingId], id, message);
+    },
     setAuthPending(state, pending) {
       state.authPending = pending;
     },
     addFAQ(state, { id, entry }) {
       Vue.set(state.faq, id, entry);
     },
+    snack(state, text) {
+      state.snackbar = text;
+    },
   },
 
   actions: {
-    async login(state, { email, password }) {
+    async login({ commit }, { email, password }) {
       let user;
 
-      state.commit('setAuthPending', true);
-      state.commit('setLoginErrorMessage', null);
+      commit('setAuthPending', true);
+      commit('setLoginErrorMessage', null);
 
       try {
         user = await auth.signInWithEmailAndPassword(email, password);
       } catch (error) {
-        state.commit('setLoginErrorMessage', error.message);
+        commit('setLoginErrorMessage', error.message);
       }
 
-      // state.commit('setUser', user);
-      state.commit('setAuthPending', false);
+      commit('setAuthPending', false);
       return user;
     },
 
@@ -133,7 +145,7 @@ const store = new Vuex.Store({
       snapshot.docs.forEach((doc) => {
         const tour = doc.data();
         tour.id = doc.id;
-        state.commit('addTour', {
+        commit('addTour', {
           id: tour.id,
           tour,
         });
@@ -162,7 +174,7 @@ const store = new Vuex.Store({
       commit('addTour', { id, tour: doc.data() });
     },
 
-    async loadBookings(state) {
+    async loadBookings({ commit }) {
       let snapshot;
       try {
         snapshot = await db.collection('bookings').get();
@@ -174,7 +186,7 @@ const store = new Vuex.Store({
       snapshot.docs.forEach((doc) => {
         const booking = doc.data();
         booking.id = doc.id;
-        state.commit('addBooking', {
+        commit('addBooking', {
           id: booking.id,
           booking,
         });
@@ -203,11 +215,75 @@ const store = new Vuex.Store({
       commit('addBooking', { id, booking: doc.data() });
     },
 
-    async bookTour(ctx, booking) {
+    async loadMessages({ commit }, bookingId) {
+      let snapshot;
+      try {
+        snapshot = await db.collection('bookings').where('booking', '=', bookingId).get();
+      } catch (e) {
+        log(e);
+        return;
+      }
+
+      snapshot.docs.forEach((doc) => {
+        const message = doc.data();
+        message.id = doc.id;
+        commit('addMessage', {
+          id: message.id,
+          message,
+        });
+      });
+    },
+
+    async bookTour({ dispatch }, booking) {
+      const { message } = booking;
       booking.created = new Date();
 
+      let res;
       try {
-        await db.collection('bookings').add(booking);
+        res = await db.collection('bookings').add(booking);
+      } catch (e) {
+        log(e);
+        return false;
+      }
+
+      if (res.id && message) {
+        // send Message to owner
+        dispatch('sendMessage', {
+          booking: res.id,
+          text: message,
+          from: booking.email,
+          notify: false,
+        });
+      }
+
+      return true;
+    },
+
+    async sendMessage(ctx, _message) {
+      const message = {
+        from: 'me',
+        created: new Date(),
+        read: false,
+        notify: true,
+        ..._message,
+      };
+
+      // do not send empty messages
+      if (!message.text) return false;
+
+      try {
+        await db.collection('messages').add(message);
+      } catch (e) {
+        log(e);
+        return false;
+      }
+
+      return true;
+    },
+
+    async updateTour(ctx, { id, updates }) {
+      try {
+        await db.collection('tours').doc(id).set(updates, { merge: true });
       } catch (e) {
         log(e);
         return false;
@@ -240,6 +316,16 @@ db.collection('bookings').onSnapshot((querySnapshot) => {
     const booking = change.doc.data();
     booking.id = change.doc.id;
     store.commit('addBooking', { id: change.doc.id, booking });
+  });
+}, (err) => {
+  log(`Encountered error: ${err}`);
+});
+
+db.collection('messages').onSnapshot((querySnapshot) => {
+  querySnapshot.docChanges().forEach((change) => {
+    const message = change.doc.data();
+    message.id = change.doc.id;
+    store.commit('addMessage', { id: change.doc.id, message });
   });
 }, (err) => {
   log(`Encountered error: ${err}`);

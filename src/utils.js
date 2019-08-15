@@ -13,6 +13,10 @@ export function convertDate(value, format) {
   return moment(value).toDate();
 }
 
+export function convertHTML(text) {
+  return text.replace('\n', '<br />');
+}
+
 export function dateEqual(d1, d2) {
   return moment(d1).isSame(d2);
 }
