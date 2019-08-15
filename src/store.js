@@ -14,6 +14,7 @@ const store = new Vuex.Store({
     loginErrorMessage: null,
     tours: {},
     bookings: {},
+    faq: {},
     navItems: [
       { title: 'Infos', to: 'info' },
       { title: 'Törns', to: 'tours' },
@@ -24,6 +25,9 @@ const store = new Vuex.Store({
   getters: {
     toursSize(state) {
       return Object.keys(state.tours).length;
+    },
+    faqSize(state) {
+      return Object.keys(state.faq).length;
     },
   },
 
@@ -44,6 +48,9 @@ const store = new Vuex.Store({
     },
     setAuthPending(state, pending) {
       state.authPending = pending;
+    },
+    addFAQ(state, { id, entry }) {
+      Vue.set(state.faq, id, entry);
     },
   },
 
@@ -73,14 +80,45 @@ const store = new Vuex.Store({
       }
     },
 
-    async loadQandA(state) {
+    async loadfaq(state) {
       let snapshot;
       try {
-        snapshot = await db.collection('infos')
+        snapshot = await db.collection('FAQ').get();
+      } catch (e) {
+        log(e);
+        return;
       }
+
+      snapshot.docs.forEach((doc) => {
+        const entry = doc.data();
+        entry.id = doc.id;
+        state.commit('addFAQ', {
+          id: entry.id,
+          entry,
+        });
+      });
     },
 
-    async createQandA(state)
+    async updateFAQ(state, data) {
+      const docRef = db.collection('FAQ').doc(data.id);
+      console.log(data.question);
+      console.log(data.answer);
+      console.log(new Date());
+      return docRef.update({
+        question: data.question,
+        anwser: data.answer,
+        date: new Date(),
+      })
+        .then(
+          () => {
+            console.log(data.id);
+            state.commit('addFAQ', {
+              id: data.id,
+              data,
+            });
+          },
+        );
+    },
 
     async loadTours(state) {
       let snapshot;

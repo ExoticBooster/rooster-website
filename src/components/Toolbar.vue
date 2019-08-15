@@ -1,7 +1,14 @@
 <template>
-  <v-toolbar app class="blue-grey white--text" scroll-off-screen scroll-target="#scrolling-techniques">
+  <v-toolbar
+  app
+  class="blue-grey white--text"
+  scroll-off-screen
+  scroll-target="#scrolling-techniques"
+  height="100%"
+  >
     <router-link class="white--text" :to="{ name: 'home' }">
-      <v-avatar>
+      <v-avatar
+      size="68">
         <img src="@/assets/RoosterLogo.png">
       </v-avatar>
     </router-link>
@@ -35,13 +42,13 @@ export default {
   color: inherit;
   text-decoration: inherit;
   font-family: 'Karla', sans-serif;
-  font-size: 25px;
+  font-size: 30px;
 }
 
 .itemText{
   color: inherit;
   text-decoration: inherit;
   font-family: 'Karla', sans-serif;
-  font-size: 17px;
+  font-size: 21px;
 }
 </style>
