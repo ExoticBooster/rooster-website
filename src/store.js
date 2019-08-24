@@ -145,7 +145,7 @@ const store = new Vuex.Store({
       snapshot.docs.forEach((doc) => {
         const tour = doc.data();
         tour.id = doc.id;
-        commit('addTour', {
+        state.commit('addTour', {
           id: tour.id,
           tour,
         });
